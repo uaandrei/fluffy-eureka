@@ -1,1 +1,1 @@
-export * from "./trackerHome";
+export * from "./TrackerHome";
