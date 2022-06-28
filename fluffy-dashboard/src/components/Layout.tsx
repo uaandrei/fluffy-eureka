@@ -4,11 +4,13 @@ import { Sidebar } from "./Sidebar";
 import { BrowserRouter } from "react-router-dom";
 
 const Layout = () => (
-  <BrowserRouter>
-    <Sidebar />
-    <Header />
-    <Router />
-  </BrowserRouter>
+  <div className="text-lg">
+    <BrowserRouter>
+      <Sidebar />
+      <Header />
+      <Router />
+    </BrowserRouter>
+  </div>
 );
 
 export { Layout };
