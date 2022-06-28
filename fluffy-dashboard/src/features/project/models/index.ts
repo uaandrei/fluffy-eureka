@@ -1,2 +1,2 @@
 export * from "./ProjectItemModel";
-export * from "./ProjectList";
+export * from "./ProjectListModel";
