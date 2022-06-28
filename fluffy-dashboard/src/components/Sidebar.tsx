@@ -6,17 +6,19 @@ const Sidebar = () => {
   const toggleSidebar = () => setShowSidebar(!showSidebar);
 
   return (
-    <div className="w-48 absolute top-0 left-0 h-screen">
+    <>
       {!showSidebar && (
-        <button title="toggle sidebar" type="button" onClick={toggleSidebar}>
-          =
-        </button>
+        <div className="absolute top-0 mx-5">
+          <button title="toggle sidebar" type="button" onClick={toggleSidebar}>
+            =
+          </button>
+        </div>
       )}
       {showSidebar && (
-        <div>
+        <div className="w-48 fixed top-0 left-0 h-screen bg-yellow-200">
           <h3>Sidebar</h3>
           <button
-            className="absolute right-0 top-0"
+            className="absolute right-0 top-0 px-3"
             title="toggle sidebar"
             type="button"
             onClick={toggleSidebar}
@@ -30,7 +32,7 @@ const Sidebar = () => {
           </ul>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

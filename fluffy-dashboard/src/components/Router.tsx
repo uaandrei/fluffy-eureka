@@ -1,11 +1,12 @@
 import { Routes, Route } from "react-router-dom";
 import { InvestHome } from "../features/invest";
-import { TrackerHome } from "../features/tracker";
+import { ProjectHome } from "../features/project";
 
 const Router = () => (
-  <div>
+  <div className="container mx-auto">
     <Routes>
-      <Route path="/" element={<TrackerHome />} />
+      <Route path="/" element={<ProjectHome />} />
+      <Route path="/project" element={<ProjectHome />} />
       <Route path="/invest" element={<InvestHome />} />
     </Routes>
   </div>

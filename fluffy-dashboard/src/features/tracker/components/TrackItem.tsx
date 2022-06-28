@@ -1,3 +1,0 @@
-const TrackerItem = () => <></>;
-
-export { TrackerItem };
