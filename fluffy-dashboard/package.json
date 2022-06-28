@@ -8,12 +8,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "material-icons": "^1.11.3",
+    "lodash": "^4.17.21",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "6"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.182",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@vitejs/plugin-react": "^1.3.0",

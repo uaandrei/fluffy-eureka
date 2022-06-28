@@ -1,2 +1,3 @@
 export * from "./ProjectList";
-export * from "./ProjectItem";
+export * from "./ProjectsList";
+export * from "./TaskItem";
