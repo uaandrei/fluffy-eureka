@@ -53,6 +53,8 @@ interface ProjectsContextState {
   moveDown(projectNo: number, taskNo: number): void;
   moveProjectDown(projectNo: number): void;
   moveProjectUp(projectNo: number): void;
+  updateTask(projectNo: number, taskChanges: Partial<TaskModel>): void;
+  updateProject(projectChanges: Partial<ProjectModel>): void;
 }
 
 const defaultState: ProjectsContextState = {
@@ -63,6 +65,8 @@ const defaultState: ProjectsContextState = {
   moveDown(_, __) {},
   moveProjectDown(_) {},
   moveProjectUp(_) {},
+  updateTask(_, __) {},
+  updateProject(_) {},
 };
 
 const ProjectsContext = createContext(defaultState);
@@ -132,6 +136,25 @@ const ProjectProvider: React.FC<PropsWithChildren> = (props) => {
     }
   };
 
+  const updateTask = (projectNo: number, taskChanges: Partial<TaskModel>) => {
+    const project = projects[projectNo];
+    const task = project.tasks[taskChanges.orderNo!];
+    project.tasks[taskChanges.orderNo!] = {
+      ...task,
+      ...taskChanges,
+    };
+    setProjects({ ...projects });
+  };
+
+  const updateProject = (projectChanges: Partial<ProjectModel>) => {
+    const project = projects[projectChanges.orderNo!];
+    projects[projectChanges.orderNo!] = {
+      ...project,
+      ...projectChanges,
+    };
+    setProjects({ ...projects });
+  };
+
   const state = {
     projects,
     toggleExpand,
@@ -140,6 +163,8 @@ const ProjectProvider: React.FC<PropsWithChildren> = (props) => {
     moveDown,
     moveProjectDown,
     moveProjectUp,
+    updateTask,
+    updateProject,
   };
   return (
     <ProjectsContext.Provider value={{ ...state }}>

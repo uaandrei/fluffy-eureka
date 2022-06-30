@@ -1,15 +1,14 @@
 import _ from "lodash";
-import { CollapseIcon, ExpandIcon, UpIcon } from "../../../components/icons";
-import { DownIcon } from "../../../components/icons/DownIcon";
+import { EditableValue, Icon, Label } from "../../../components";
 import { ProjectModel } from "../models";
 import { useProjectsContext } from "../state/ProjectsState";
-import { TaskItemPreview } from "./";
+import { TaskRowItem } from ".";
 
 interface ProjectProps {
   project: ProjectModel;
 }
 
-const ProjectList = ({ project }: ProjectProps) => {
+const ProjectRowItem = ({ project }: ProjectProps) => {
   const { toggleExpand, moveProjectDown, moveProjectUp } = useProjectsContext();
   return (
     <div className="my-4">
@@ -18,36 +17,45 @@ const ProjectList = ({ project }: ProjectProps) => {
           className="flex-none mr-2"
           onClick={() => toggleExpand(project.orderNo)}
         >
-          {project.expanded ? <CollapseIcon /> : <ExpandIcon />}
+          {project.expanded ? <Icon type="collapse" /> : <Icon type="expand" />}
         </div>
-        <div className="flex-auto text-xl mb-1 hover:cursor-pointer">
-          <h1 onClick={() => toggleExpand(project.orderNo)}>{project.name}</h1>
+        <div className="flex-auto text-xl">
+          <EditableValue
+            displayValue={project.name}
+            onSave={(newValue) => {}}
+          />
         </div>
-        <div className="flex flex-col mx-4">
+        <div className="flex-none mr-10">
+          <Label type="green" value="ITG" />
+          <Label type="blue" value="ITG" />
+          <Label type="fuchsia" value="ITG" />
+        </div>
+        <div className="flex-none">
           <span
+            className="mr-2"
             onClick={() => {
               moveProjectUp(project.orderNo);
             }}
           >
-            <UpIcon />
+            <Icon type="up" />
           </span>
           <span
             onClick={() => {
               moveProjectDown(project.orderNo);
             }}
           >
-            <DownIcon />
+            <Icon type="down" />
           </span>
         </div>
       </div>
       {project.expanded &&
         _.map(project.tasks, (item) => (
-          <div key={item.id}>
-            <TaskItemPreview projectNo={project.orderNo} task={item} />
+          <div className="my-2" key={item.id}>
+            <TaskRowItem projectNo={project.orderNo} task={item} />
           </div>
         ))}
     </div>
   );
 };
 
-export { ProjectList };
+export { ProjectRowItem };

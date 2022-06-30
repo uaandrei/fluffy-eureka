@@ -1,3 +1,3 @@
-export * from "./ProjectList";
+export * from "./ProjectRowItem";
 export * from "./ProjectsList";
-export * from "./TaskItemPreview";
+export * from "./TaskRowItem";

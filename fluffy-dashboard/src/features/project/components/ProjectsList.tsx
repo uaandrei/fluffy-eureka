@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { ProjectList } from "../components";
+import { ProjectRowItem } from "../components";
 import { useProjectsContext } from "../state/ProjectsState";
 
 const ProjectsList = () => {
@@ -7,10 +7,10 @@ const ProjectsList = () => {
   return (
     <div>
       <div className="mb-3">Project Home</div>
-      <div className="xl:w-1/2 md:w-3/4 w-full">
+      <div className="md:w-3/4 w-full">
         {projects &&
           _.map(projects, (project) => (
-            <ProjectList project={project} key={project.id} />
+            <ProjectRowItem project={project} key={project.id} />
           ))}
       </div>
     </div>
