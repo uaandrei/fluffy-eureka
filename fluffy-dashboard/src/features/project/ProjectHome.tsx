@@ -4,9 +4,11 @@ import { ProjectProvider } from "./state/ProjectsState";
 
 const ProjectHome = () => {
   return (
-    <ProjectProvider>
-      <ProjectsList />
-    </ProjectProvider>
+    <div className="container mx-auto">
+      <ProjectProvider>
+        <ProjectsList />
+      </ProjectProvider>
+    </div>
   );
 };
 
