@@ -7,3 +7,7 @@ body {
   height: 100%;
   margin: 0;
 }
+
+button {
+  @apply border px-3 rounded-xl border-black text-lg font-bold hover:bg-blue-600 hover:border-blue-600 disabled:text-gray-400 hover:disabled:bg-white disabled:border-gray-400 hover:text-white;
+}

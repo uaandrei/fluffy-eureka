@@ -28,8 +28,8 @@ const InvestmentChart = () => {
   const data = transformData(chartData);
   return (
     <>
-      <div>
-        <button type="button" onClick={importData}>
+      <div className="container mx-auto">
+        <button type="button" onClick={importData} className="mt-3">
           Refresh data
         </button>
       </div>

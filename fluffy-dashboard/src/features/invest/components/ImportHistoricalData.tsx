@@ -1,16 +1,16 @@
 import _ from "lodash";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { HistoricalDataModel, InvestmentTypes } from "../models";
 import { investService } from "../services";
 
 const ImportHistoricalData = () => {
   const [type, setType] = useState("");
+  const [file, setFile] = useState<File>();
 
-  const fileRef = useRef<HTMLInputElement>(null);
   const processFileUpload = () => {
-    if (fileRef.current) {
+    if (file) {
       const reader = new FileReader();
-      reader.readAsText(fileRef.current.files![0], "utf-8");
+      reader.readAsText(file, "utf-8");
       reader.onload = (ev) => {
         const rawJson = ev.target?.result! as string;
         processAndImportJson(rawJson);
@@ -38,6 +38,8 @@ const ImportHistoricalData = () => {
     investService.setHistoricData(orderedValues);
   };
 
+  const isImportButtonDisabled = !type || !file;
+
   return (
     <>
       <div>
@@ -56,16 +58,15 @@ const ImportHistoricalData = () => {
         </select>
         <span className="ml-2 w-full">Fisier: </span>
         <input
-          ref={fileRef}
           type="file"
           title="upload historical data"
           className="border mx-3"
+          onChange={(e) => setFile(e.currentTarget.files![0])}
         />
         <button
           type="button"
           onClick={processFileUpload}
-          className="border border-black rounded hover:bg-gray-400 px-2 disabled:bg-gray-600"
-          disabled={!type || fileRef.current?.files?.length === 0}
+          disabled={isImportButtonDisabled}
         >
           Import
         </button>
