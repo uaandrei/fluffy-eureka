@@ -1,14 +1,34 @@
+import _ from "lodash";
 import { storageService } from "../../../utils";
-import { HistoricalDataStorageModel } from "..";
+import {
+  HistoricalDataStorageModel,
+  InvestmentDataState,
+  InvestmentKeys,
+  InvestmentStorageKeys,
+  InvestmentTypes,
+} from "../models";
 
-const HISTORICAL_DATA_KEY = "HISTORICAL_DATA_KEY";
-const setHistoricData = (value: any): void =>
-  storageService.setData(HISTORICAL_DATA_KEY, value);
+const setHistoricalData = (value: any, key: InvestmentKeys): void => {
+  const storageKey = InvestmentStorageKeys[key];
+  storageService.setData(storageKey, value);
+};
 
-const getHistoricData = () =>
-  storageService.getData(HISTORICAL_DATA_KEY) as HistoricalDataStorageModel[];
+const getHistoricalData = (key: InvestmentKeys) => {
+  const storageKey = InvestmentStorageKeys[key];
+  const storedData = storageService.getData(storageKey);
+  return storedData as HistoricalDataStorageModel[];
+};
+
+const getAllHistorical = (): InvestmentDataState => {
+  const state: InvestmentDataState = {};
+  _.map(InvestmentTypes, (_: any, key: InvestmentKeys) => {
+    state[key] = getHistoricalData(key);
+  });
+  return state;
+};
 
 export default {
-  setHistoricData,
-  getHistoricData,
+  setHistoricalData,
+  getHistoricalData,
+  getAllHistorical,
 };

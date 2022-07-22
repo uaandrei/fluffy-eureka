@@ -2,30 +2,49 @@ import { ResponsiveLine, Serie } from "@nivo/line";
 import _ from "lodash";
 import { useState } from "react";
 import { investService } from "../services";
-import { HistoricalDataStorageModel } from "../models";
+import {
+  HistoricalDataStorageModel,
+  InvestmentDataState,
+  InvestmentKeys,
+  InvestmentTypes,
+} from "../models";
 
 const InvestmentChart = () => {
-  const [chartData, setChartData] = useState<HistoricalDataStorageModel[]>(
-    investService.getHistoricData()
+  const [state, setState] = useState<InvestmentDataState>(
+    investService.getAllHistorical()
   );
 
   const importData = () => {
-    const data = investService.getHistoricData();
-    setChartData(data);
+    const data = investService.getAllHistorical();
+    setState(data);
   };
 
-  const transformData = (chartData: HistoricalDataStorageModel[]): Serie => {
-    const data = _.map(chartData, (p) => ({
-      x: p.date.split("T")[0],
-      y: p.vuan.toString(),
-    }));
-    const serie: Serie = {
-      id: "BRD Actiuni",
-      data,
-    };
-    return serie;
+  const transformData = (state: InvestmentDataState): Serie[] => {
+    const series: Serie[] = [];
+
+    _.map(
+      state,
+      (
+        serieData: HistoricalDataStorageModel[] | undefined,
+        key: InvestmentKeys
+      ) => {
+        if (serieData) {
+          const data = _.map(serieData, (p) => ({
+            x: p.date.split("T")[0],
+            y: p.vuan.toString(),
+          }));
+          const serie: Serie = {
+            id: InvestmentTypes[key],
+            data,
+          };
+          series.push(serie);
+        }
+      }
+    );
+
+    return series;
   };
-  const data = transformData(chartData);
+  const data = transformData(state);
   return (
     <>
       <div className="container mx-auto">
@@ -36,15 +55,11 @@ const InvestmentChart = () => {
       {data && (
         <div style={{ height: "600px" }}>
           <ResponsiveLine
-            data={[data]}
+            data={data}
             pointLabelYOffset={-12}
             enableSlices="x"
             margin={{ top: 20, right: 20, bottom: 60, left: 80 }}
             axisBottom={{ tickRotation: -72 }}
-            yScale={{
-              type: "linear",
-              min: "auto",
-            }}
           />
         </div>
       )}

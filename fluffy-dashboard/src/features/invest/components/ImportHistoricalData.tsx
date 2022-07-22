@@ -1,10 +1,14 @@
 import _ from "lodash";
 import { useState } from "react";
-import { HistoricalDataModel, InvestmentTypes } from "../models";
+import {
+  HistoricalDataModel,
+  InvestmentKeys,
+  InvestmentTypes,
+} from "../models";
 import { investService } from "../services";
 
 const ImportHistoricalData = () => {
-  const [type, setType] = useState("");
+  const [investmentType, setInvestmentType] = useState<InvestmentKeys>();
   const [file, setFile] = useState<File>();
 
   const processFileUpload = () => {
@@ -35,10 +39,10 @@ const ImportHistoricalData = () => {
       (p) => p.date > referenceDate
     );
     const orderedValues = _.orderBy(filteredValues, (p) => p.date, "asc");
-    investService.setHistoricData(orderedValues);
+    investService.setHistoricalData(orderedValues, investmentType!);
   };
 
-  const isImportButtonDisabled = !type || !file;
+  const isImportButtonDisabled = !investmentType || !file;
 
   return (
     <>
@@ -47,7 +51,7 @@ const ImportHistoricalData = () => {
         <select
           className="border py-1"
           defaultValue=""
-          onChange={(e) => setType(e.target.value)}
+          onChange={(e) => setInvestmentType(e.target.value as InvestmentKeys)}
         >
           <option></option>
           {_.map(InvestmentTypes, (value, key) => (
