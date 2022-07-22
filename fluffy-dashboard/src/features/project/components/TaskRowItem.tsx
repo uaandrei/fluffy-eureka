@@ -31,7 +31,7 @@ const TaskRowItem = ({ projectNo, task }: TaskProps) => {
           } absolute bg-white border p-4 border-black right-1 md:right-auto divide-y divide-black`}
         >
           <div>
-            <label className="px-2 rounded-2xl hover:bg-slate-200 bg-transparent transition-all duration-500 hover:cursor-pointer">
+            <label className="px-2 rounded-2xl hover:bg-slate-200 bg-transparent transition-all duration-300 hover:cursor-pointer">
               <input
                 type="checkbox"
                 title="completed"
@@ -44,16 +44,16 @@ const TaskRowItem = ({ projectNo, task }: TaskProps) => {
           </div>
           <div>
             <span onClick={() => moveUp(projectNo, task.orderNo)}>
-              <label className="px-2 rounded-2xl hover:bg-slate-200 bg-transparent transition-all duration-500 hover:cursor-pointer">
-                <Icon type="up" />
+              <label className="px-2 rounded-2xl hover:bg-slate-200 bg-transparent transition-all duration-300 hover:cursor-pointer">
+                <Icon type="up" hideHover />
                 move item up
               </label>
             </span>
           </div>
           <div>
             <span onClick={() => moveDown(projectNo, task.orderNo)}>
-              <label className="px-2 rounded-2xl hover:bg-slate-200 bg-transparent transition-all duration-500 hover:cursor-pointer">
-                <Icon type="down" />
+              <label className="px-2 rounded-2xl hover:bg-slate-200 bg-transparent transition-all duration-300 hover:cursor-pointer">
+                <Icon type="down" hideHover />
                 move item down
               </label>
             </span>

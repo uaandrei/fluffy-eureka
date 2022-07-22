@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
 type iconTypes =
   | "check"
@@ -14,20 +14,39 @@ type iconTypes =
 export type IconProps = {
   hoverColor?: string;
   type: iconTypes;
+  hideHover?: boolean;
 };
 
-const Icon: React.FC<IconProps> = ({ type }) => {
+type IconContainerProps = {
+  hideHover?: boolean;
+};
+
+const IconContainer: React.FC<PropsWithChildren<IconContainerProps>> = ({
+  hideHover,
+  children,
+}) =>
+  hideHover ? (
+    <span>{children}</span>
+  ) : (
+    <span className="hover:bg-gray-200 transition-all duration-300 rounded bg-transparent ">
+      {children}
+    </span>
+  );
+
+const Icon: React.FC<IconProps> = ({ type, hideHover }) => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-6 w-6 inline hover:bg-gray-200 rounded hover:cursor-pointer self-center"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      {getIconPathByType(type)}
-    </svg>
+    <IconContainer hideHover={hideHover}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-8 w-8 inline hover:cursor-pointer self-center pb-1 px-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth={2}
+      >
+        {getIconPathByType(type)}
+      </svg>
+    </IconContainer>
   );
 };
 
