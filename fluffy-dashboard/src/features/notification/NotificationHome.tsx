@@ -1,0 +1,3 @@
+const NotificationHome = () => <></>;
+
+export { NotificationHome };

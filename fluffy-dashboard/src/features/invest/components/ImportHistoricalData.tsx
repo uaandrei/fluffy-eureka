@@ -1,15 +1,13 @@
 import _ from "lodash";
 import { useState } from "react";
-import {
-  HistoricalDataModel,
-  InvestmentKeys,
-  InvestmentTypes,
-} from "../models";
+import { useNotificationsContext } from "../../notification";
+import { HistoricalDataModel, InvestmentKeys, InvestmentTypes } from "../models";
 import { investService } from "../services";
 
 const ImportHistoricalData = () => {
   const [investmentType, setInvestmentType] = useState<InvestmentKeys>();
   const [file, setFile] = useState<File>();
+  const { showNotification } = useNotificationsContext();
 
   const processFileUpload = () => {
     if (file) {
@@ -34,12 +32,10 @@ const ImportHistoricalData = () => {
       };
     });
     const referenceDate = new Date(Date.now() - 10000000000);
-    const filteredValues = _.filter(
-      parsedValues,
-      (p) => p.date > referenceDate
-    );
+    const filteredValues = _.filter(parsedValues, (p) => p.date > referenceDate);
     const orderedValues = _.orderBy(filteredValues, (p) => p.date, "asc");
     investService.setHistoricalData(orderedValues, investmentType!);
+    showNotification(`Import '${investmentType}' finished!`);
   };
 
   const isImportButtonDisabled = !investmentType || !file;
@@ -67,11 +63,7 @@ const ImportHistoricalData = () => {
           className="border mx-3"
           onChange={(e) => setFile(e.currentTarget.files![0])}
         />
-        <button
-          type="button"
-          onClick={processFileUpload}
-          disabled={isImportButtonDisabled}
-        >
+        <button type="button" onClick={processFileUpload} disabled={isImportButtonDisabled}>
           Import
         </button>
       </div>
