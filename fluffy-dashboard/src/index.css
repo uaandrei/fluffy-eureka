@@ -11,3 +11,19 @@ body {
 button {
   @apply border px-3 rounded-xl border-black text-lg font-bold hover:bg-blue-600 hover:border-blue-600 disabled:text-gray-400 hover:disabled:bg-white disabled:border-gray-400 hover:text-white;
 }
+
+h1 {
+  @apply text-2xl font-bold;
+}
+
+h2 {
+  @apply text-xl font-bold;
+}
+
+input {
+  @apply border;
+}
+
+input[type="number"] {
+  @apply p-1;
+}

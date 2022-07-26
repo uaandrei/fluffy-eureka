@@ -10,9 +10,7 @@ import {
 } from "../models";
 
 const InvestmentChart = () => {
-  const [state, setState] = useState<InvestmentDataState>(
-    investService.getAllHistorical()
-  );
+  const [state, setState] = useState<InvestmentDataState>(investService.getAllHistorical());
 
   const importData = () => {
     const data = investService.getAllHistorical();
@@ -22,36 +20,25 @@ const InvestmentChart = () => {
   const transformData = (state: InvestmentDataState): Serie[] => {
     const series: Serie[] = [];
 
-    _.map(
-      state,
-      (
-        serieData: HistoricalDataStorageModel[] | undefined,
-        key: InvestmentKeys
-      ) => {
-        if (serieData) {
-          const data = _.map(serieData, (p) => ({
-            x: p.date.split("T")[0],
-            y: p.vuan.toString(),
-          }));
-          const serie: Serie = {
-            id: InvestmentTypes[key],
-            data,
-          };
-          series.push(serie);
-        }
+    _.map(state, (serieData: HistoricalDataStorageModel[] | undefined, key: InvestmentKeys) => {
+      if (serieData) {
+        const data = _.map(serieData, (p) => ({
+          x: p.date.split("T")[0],
+          y: p.vuan.toString(),
+        }));
+        const serie: Serie = {
+          id: InvestmentTypes[key],
+          data,
+        };
+        series.push(serie);
       }
-    );
+    });
 
     return series;
   };
   const data = transformData(state);
   return (
     <>
-      <div className="container mx-auto">
-        <button type="button" onClick={importData} className="mt-3">
-          Refresh data
-        </button>
-      </div>
       {data && (
         <div style={{ height: "600px" }}>
           <ResponsiveLine
@@ -63,6 +50,11 @@ const InvestmentChart = () => {
           />
         </div>
       )}
+      <div>
+        <button type="button" onClick={importData} className="mt-3 ml-4">
+          Refresh data
+        </button>
+      </div>
     </>
   );
 };

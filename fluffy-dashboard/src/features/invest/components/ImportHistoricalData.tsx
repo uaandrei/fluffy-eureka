@@ -1,8 +1,9 @@
 import _ from "lodash";
 import { useState } from "react";
 import { useNotificationsContext } from "../../notification";
-import { HistoricalDataModel, InvestmentKeys, InvestmentTypes } from "../models";
+import { HistoricalDataModel, InvestmentKeys } from "../models";
 import { investService } from "../services";
+import { InvestmentTypesSelect } from "./";
 
 const ImportHistoricalData = () => {
   const [investmentType, setInvestmentType] = useState<InvestmentKeys>();
@@ -41,33 +42,22 @@ const ImportHistoricalData = () => {
   const isImportButtonDisabled = !investmentType || !file;
 
   return (
-    <>
-      <div>
-        <span>Actiuni: </span>
-        <select
-          className="border py-1"
-          defaultValue=""
-          onChange={(e) => setInvestmentType(e.target.value as InvestmentKeys)}
-        >
-          <option></option>
-          {_.map(InvestmentTypes, (value, key) => (
-            <option key={key} value={key}>
-              {value}
-            </option>
-          ))}
-        </select>
-        <span className="ml-2 w-full">Fisier: </span>
+    <div>
+      <h2>Investment historical data import</h2>
+      <InvestmentTypesSelect onChange={setInvestmentType} />
+      <label className="mx-1">
+        Fisier
         <input
           type="file"
           title="upload historical data"
-          className="border mx-3"
+          className="ml-1"
           onChange={(e) => setFile(e.currentTarget.files![0])}
         />
-        <button type="button" onClick={processFileUpload} disabled={isImportButtonDisabled}>
-          Import
-        </button>
-      </div>
-    </>
+      </label>
+      <button type="button" onClick={processFileUpload} disabled={isImportButtonDisabled}>
+        Import
+      </button>
+    </div>
   );
 };
 

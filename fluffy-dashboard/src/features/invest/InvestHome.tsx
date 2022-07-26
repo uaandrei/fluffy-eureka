@@ -1,12 +1,13 @@
-import { ImportHistoricalData, InvestmentChart } from "./components";
+import { ImportHistoricalData, InvestmentChart, MyInvestments } from "./components";
 const InvestHome = () => {
   return (
     <>
       <div className="container mx-auto">
-        <div>InvestHome</div>
-        <div>
-          <ImportHistoricalData />
+        <h1>Investments</h1>
+        <div className="my-3">
+          <MyInvestments />
         </div>
+        <ImportHistoricalData />
       </div>
       <div>
         <InvestmentChart />
